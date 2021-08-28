@@ -1,0 +1,7 @@
+name: SCL
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  
