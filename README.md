@@ -1,7 +1,7 @@
 # SCL：Self-Contrastive Learning with Hard Negative Sampling for Self-supervised Point Cloud Learning
-![image-20210829103326123](C:\Users\scncdba\AppData\Roaming\Typora\typora-user-images\image-20210829103326123.png)
+![image-20210829103326123](teaser.png)
 
-[[Paper]](https://arxiv.org/abs/2107.01886"Paper") [[Code]](https://github.com/pkudba/SCL"Code")
+[[Paper]](https://arxiv.org/abs/2107.01886) [[Code]](https://github.com/pkudba/SCL) 
 
 This repository is the official PyTorch implementation of the following paper:
 
