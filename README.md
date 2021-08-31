@@ -3,7 +3,7 @@
 
 [[Paper]](https://arxiv.org/abs/2107.01886) [[Code]](https://github.com/pkudba/SCL) 
 
-This repository is the official PyTorch implementation of the following paper:
+This repository is the official PyTorch implementation of the following paper: (still under construction)
 
 Bi’an Du, Xiang Gao, Wei Hu, Xin Li, "Self-Contrastive Learning with Hard Negative Sampling for Self-supervised Point Cloud Learning," accepted to *ACM International Conference on Multimedia (ACM MM), July, 2021.*
 
