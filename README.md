@@ -13,10 +13,11 @@ Bi’an Du, Xiang Gao, Wei Hu, Xin Li, "Self-Contrastive Learning with Hard Nega
 
 The code has been tested with the following environment:
 
-- Python3==3.7.9
-- pytorch==1.5.1
+- Python3==3.8.11
+- pytorch==1.7.1
 - scikit-learn==0.23.2
 - torch-geometric==1.6.1
+- pytorch3d==0.5.0
 - h5py==2.10.0
 
 #### Install via Conda
@@ -34,13 +35,21 @@ You may also set up the environment manually. We provide the instruction as foll
 
 ```python
 # Create a conda environment
-conda create --name SCL python=3.7
+conda create --name SCL python=3.8
 conda activate SCL
 # install required packages
-conda install -y pytorch=1.5.1 torchvision=0.6.1 cudatoolkit=10.1 -c pytorch
+conda install -c pytorch pytorch=1.7.1 torchvision cudatoolkit=10.2
+conda install -c fvcore -c iopath -c conda-forge fvcore iopath
+conda install -c bottler nvidiacub
+conda install pytorch3d -c pytorch3d
 conda install -y scikit-learn=0.23.2
 conda install -y -c conda-forge h5py=2.10.0 
-conda install -y -c pytorch3d pytorch3d=0.2.5
+conda install -c conda-forge tensorboardx
+# Install PyTorch Geometric
+pip install torch-cluster==1.5.8 -f https://pytorch-geometric.com/whl/torch-1.7.1+cu102.html
+pip install torch-sparse==0.6.8 -f https://pytorch-geometric.com/whl/torch-1.7.1+cu102.html
+pip install torch-scatter==2.0.5 -f https://pytorch-geometric.com/whl/torch-1.7.1+cu102.html
+pip install torch-geometric==1.6.1
 ```
 
 
