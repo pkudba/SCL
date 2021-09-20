@@ -7,5 +7,3 @@ import torch.nn as nn
 
 from tensorboardX import SummaryWriter
 from torch.utils.data.dataloader import DataLoader
-
-from model import Model
