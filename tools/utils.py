@@ -13,14 +13,13 @@ def softmax(x):
     result = torch.zeros([1, 8]).cuda(device=6)
     for y in exp_x:
         result = torch.cat((result, (y/torch.sum(y)).unsqueeze(0)), 0)
-        # result = y / torch.sum(y)
     return result[1:321, :]
 
 
 def create_output(vertices, colors, filename):
     colors = colors.reshape(-1, 3)
     vertices = np.hstack([vertices.reshape(-1, 3), colors])
-    np.savetxt(filename, vertices, fmt='%f %f %f %d %d %d')     # 必须先写入，然后利用write()在头部插入ply header
+    np.savetxt(filename, vertices, fmt='%f %f %f %d %d %d')     
     ply_header = '''ply
     		format ascii 1.0
     		element vertex %(vert_num)d
@@ -38,12 +37,6 @@ def create_output(vertices, colors, filename):
         f.seek(0)
         f.write(ply_header % dict(vert_num=len(vertices)))
         f.write(old)     
-        
-
-# def softmax(x):
-#     exp_x = torch.exp(x)
-#     result = exp_x / torch.sum(exp_x)
-#     return result
 
 
 def Addlabel(x, lst):
@@ -55,15 +48,14 @@ def Addlabel(x, lst):
 
 def load_h5_data_label_seg(file_name):
     f = h5py.File(file_name)
-    data = f['data'][:]  # (2048, 2048, 3)
-    label = f['label'][:]  # (2048, 1)
-    seg = f['pid'][:]  # (2048, 2048)
+    data = f['data'][:]  
+    label = f['label'][:]  
+    seg = f['pid'][:] 
     return data, label, seg
 
 
 def generate_pairs(x, num):
     normals_ds = x[0:num, :]
-    # print(normals_ds.shape)                # 128x3
     cnt = 0
     flag = np.zeros((320,), dtype=int)
     chooses = np.empty([320, 2])
@@ -97,9 +89,6 @@ def generate_pairs(x, num):
     chooses = torch.tensor(chooses, dtype=torch.int64)
     chooses = chooses.permute(1, 0)
     cangle = torch.tensor(cangle, dtype=torch.float64)
-    # print(chooses.shape, cangle.shape)                 # 2x320, 320
-    # print(type(chooses), type(cangle))
-    # exit()
     return chooses, cangle
 
 
@@ -120,14 +109,12 @@ def save_weights(epoch, model, optimizer, save_path):
         for k, v in model.state_dict().items()
     ])
     optim_weights = optimizer.state_dict()
-    # sched_weights = scheduler.state_dict()
     save_dict = {
         'epoch': epoch,
         'model': model_weights,
         'optimizer': optim_weights,
     }
     torch.save(save_dict, save_path)
-    # print_log('Model ' + save_path + ' saved.')
 
 
 def draw_hist(myList, Title, Xlabel, Ylabel, Xmin, Xmax, Ymin, Ymax):
@@ -213,10 +200,6 @@ def load_h5(file_name):
     data = f['data'][:]
     label = f['label'][:]
     normal = f['normal'][:]
-    # print(data.shape)
-    # print(label.shape)
-    # print(normal.shape)
-    # print("**")
     return data, label, normal
 
 
@@ -240,18 +223,15 @@ def knn_old(x, k):
     x2 = torch.sum(x**2, dim=1, keepdim=True)
     pairwise_distance = -x2 - inner - x2.transpose(2, 1)
     indices = pairwise_distance.topk(k=k, dim=-1)[1]
-    return indices  # (batch_size, num_points, k)
+    return indices  
 
 
 def get_edge_feature(x, k=20):
     batch_siz = x.size(0)
     num_points = x.size(2)
-    # x = x.view(batch_siz, -1, num_points)
     num_feats = x.size(1)
 
-    # _, indices, _ = pytorch3d.ops.knn_points(x, x, K=20)  # (batch_size, num_points, k)
     _, indices, _ = pytorch3d.ops.knn_points(x.transpose(1, 2).contiguous(), x.transpose(1, 2).contiguous(), K=20)
-    #indices = knn_old(x, k=20)
     indices_base = torch.arange(
         0, batch_siz, device=x.device).view(-1, 1, 1) * num_points
     indices = indices + indices_base
@@ -259,16 +239,6 @@ def get_edge_feature(x, k=20):
 
     x = x.transpose(2, 1).contiguous()
     feature = x.view(batch_siz * num_points, -1)[indices, :]
-    '''
-    if torch.min(indices) > 100000:
-        print("-----: debug get_edge_feature ing...------")
-        print("indices max: {}".format(max(indices)))
-        print("indices min: {}".format(min(indices)))
-        print(batch_siz*num_points)    
-        print("x.shape : {}".format(x.shape))
-        print("feature.shape : {}".format(feature.shape))
-        print("--------debug ending...----------")
-    '''
     feature = feature.view(batch_siz, num_points, k, num_feats)
     x = x.view(batch_siz, num_points, 1, num_feats).repeat(1, 1, k, 1)
     feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2)
@@ -295,15 +265,6 @@ def compute_dis2(x, y):
 
 
 def main():
-    '''
-    name = 'graph_avt.transforms.affine.Affine'
-    mod = import_class(name)
-    s = {
-        'translation': False
-    }
-    mod = mod(**s)
-    print(mod)
-    '''
     print("load tools")
 
 
