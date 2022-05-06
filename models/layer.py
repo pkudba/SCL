@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 import torch
 import torch.nn as nn
-import utils
+from tools.utils import get_edge_feature, get_total_parameters
 from collections import OrderedDict
 
 
@@ -17,7 +17,7 @@ class EdgeConvolution(nn.Module):
         self.relu = nn.LeakyReLU(negative_slope=0.2)
 
     def forward(self, x):
-        x = utils.get_edge_feature(x, k=self.k)
+        x = get_edge_feature(x, k=self.k)
         x = self.relu(self.bn(self.conv(x)))
         x = x.max(dim=-1, keepdim=False)[0]
         return x
@@ -60,7 +60,7 @@ class MultiEdgeConvolution(nn.Module):
             self.conv.add_module('layer%d' % index, layer)
 
     def forward(self, x):
-        x = utils.get_edge_feature(x, k=self.k)
+        x = get_edge_feature(x, k=self.k)
         x = self.conv(x)
         x = x.max(dim=-1, keepdim=False)[0]
         return x
@@ -68,10 +68,9 @@ class MultiEdgeConvolution(nn.Module):
 
 def main():
     layer = EdgeConvolution(k=10, in_features=3, out_features=128)
-    print('Parameters:', utils.get_total_parameters(layer))
+    print('Parameters:', get_total_parameters(layer))
     x = torch.rand(1, 3, 1024)
     y = layer(x)
-    print(y.size())
 
 
 if __name__ == '__main__':
