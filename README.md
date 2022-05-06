@@ -133,7 +133,7 @@ After training the feature extractors, you can train the classifier by running t
 python execute.py --mode segmentation --detail 4fc-seg --use-cuda True --eval-classifier False --backbone-path [your-backbone-path]
 ```
 
-Again, you should specify the [your-backbone-path].
+Again, you should specify the `[your-backbone-path]`.  
 
 ## Citation
 
