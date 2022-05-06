@@ -75,7 +75,7 @@ rm shapenet_part_seg_hdf5_data.zip
 mv hdf5_data shapenet_part
 ```
 
-The estimated normal vectors of `ShapeNet Part`  can be downloaded from [GoogleDrive](https://drive.google.com/drive/folders/18pQrOx9GwiC2WXe5s-9OI_zozAmSdDsr?usp=sharing), and manually place the `train_npynorm_of_ShapeNet` and `test_npyFile_of_ShapeNet` folders into `your-data-path` folder.
+The estimated normal vectors of `ShapeNet Part`  can be downloaded from [GoogleDrive](https://drive.google.com/drive/folders/18z56XuRnwO4J8rVkSL0W3pfCv5odSD8C), and manually place the `train_npynorm_of_ShapeNet` and `test_npyFile_of_ShapeNet` folders into `your-data-path` folder.
 
 ## Usage
 
