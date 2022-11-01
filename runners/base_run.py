@@ -73,7 +73,7 @@ class Runner:
             os.makedirs(self.backbone_path)
         self.siamese_path = os.path.join(args.save_dir, 'siamese')
         if not os.path.exists(self.siamese_path):
-            os.makedirs(self.siamse_path)
+            os.makedirs(self.siamese_path)
         self.classifier_path = os.path.join(args.save_dir, 'classifier')
         if not os.path.exists(self.classifier_path):
             os.makedirs(self.classifier_path)
